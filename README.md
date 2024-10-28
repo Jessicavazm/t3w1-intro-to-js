@@ -455,3 +455,149 @@ Rest syntax looks exactly like spread syntax - it's three dots ... - and is ofte
 
 When we define a function and use rest syntax, the parameter is called a rest parameter. Note that we can define a function to accept standard parameters together with rest ones. Note that we can't define a function with more than one rest parameter because it would be impossible to know which arguments correspond to which parameter otherwise. Another limitation is that the rest parameter, if exists, needs to be the last parameter in the function definition, 
 
+
+### Functions
+The declaration starts with the keyword function followed by the function name (using camelCase) and the list of parameters wrapped in parentheses. If a function doesn't have any parameters, the function name is followed by empty parentheses. Finally, the function body follows wrapped in curly braces {}. The body includes statements that are executed when the function is called. Example of a function bellow:
+
+    function addTwo(num1, num2) {
+    return num1 + num2;
+    }
+
+    let result = addTwo(2, 3); // result now contains the value 5
+    console.log(result); // => 5
+
+- In JavaScript, we MUST use the parentheses () when executing a function. 
+- Similarly to Python, JavaScript treats functions as first-class objects. It means that functions can be handled similarly to other values like strings or numbers. We can assign a value to a variable or an object property, we can pass a value as an argument to a function. JS functions can be passed and assigned like any other value.
+- An anonymous function is a function without the name identifier. A named function is a function with a name.
+- A recursive function is a function that calls itself. In the example bellow, the factorial function is recursive: it calls itself and returns the result of the current number num multiplied by the value returned by the function. 
+
+#### Example
+    function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    }
+    return num * factorial(num - 1);
+    }
+
+    console.log(factorial(4)); // 24
+
+- Expression function is another way to declare a function, it's very similar to the function declaration. The main differences are that the function is stored in a variable and it doesn't contain a function name (unless a name is given).
+- Expression functions are commonly passed as args in other functions while declaration functions are commonly used to declare global or scope functions.
+- Note that the function expression name and the variable name can be the same or they can be different. 
+
+#### Example 
+
+    // function expression #1
+
+    // the expression:
+    function (num1, num2) {
+    return num1 + num2;
+    }
+
+    // use of the expression in an assignment statement:
+    const sum = function (num1, num2) {
+    return num1 + num2;
+    };
+
+
+#### Arrow syntax => (fat arrow)
+
+Arrow functions is an efficient and more compact way to write anonymous function expressions. Parameters are wrapped in parenthesis following the fat arrow and the function body.
+General syntax bellow:
+    
+    (param1, param2) => {
+    // statements
+    };
+
+- If the function body includes only one line, the curly braces {} wrapping the body are optional.
+- We may omit parentheses () if a function has only one parameter (both ways are correct, although style guides recommend wrapping the parameters in the parentheses in any case). Example bellow:
+- One-line arrow functions return implicitly the value from the body - but only when there are no braces.
+
+#### Example
+    const addTwo = (num1, num2) => num1 + num2;
+    console.log(addTwo(1, 2)); // => 3
+
+
+#### Callback functions
+A callback function is just a function that is passed as an argument to and executed by another function. Note that when passing a callback function, no parentheses are included. Example bellow:
+
+    function sayHi(name) {
+    console.log("hi", name);
+    }
+
+    function greet(name, callback) {
+    callback(name);
+    }
+
+    greet("Emma", sayHi);
+
+
+#### Anonymous callback functions 
+It's useful when the code is simple and it doesn't need to be rewritten in another function.
+Callbacks can be passed in as traditional functions or in the arrow form. Arrow functions are often defined in the parameters list, e.g. in array methods forEach, map, reduce, etc.
+    
+    // define a function separately
+    const print = function (el) {
+    console.log(el);
+    };
+
+    // pass the function as a callback
+    [1, 3, 7].forEach(print);
+
+    // define an arrow function while passing it as a callback
+    [1, 3, 7].forEach((el) => console.log(el));
+
+
+#### Immediately invoked function expression (IIFE)
+Anonymous function that will run immediately and only once. Important points: The first is the anonymous function contained inside the outer set of parentheses called the Grouping Operator (). This prevents accessing variables within the IIFE idiom as well as polluting the global scope (more on scope later in the lesson). The second part creates the immediately invoked function expression () through which the JavaScript engine will directly interpret the function.
+
+    (() => {
+    let a = 20;
+    let b = 20;
+    var result = a + b;
+    console.log(result);
+    })(); // => 40
+
+
+### Block and scopes
+A block is also called 'block statement' is a collection of zero or more statements placed inside curly braces {}. In the if statement, the block starts with the opening brace {, ends with the closing brace }, and includes one statement. In the while loop, the block includes 2 statements: console.log(num) and return countDown(num - 1). Example bellow: 
+
+    if (x <= 1) {
+    return 1;
+    }
+
+    while (num >= 0) {
+    console.log(num);
+    return countDown(num - 1);
+}
+
+- In JavaScript, we can access the variables declared outside our functions. If we declare a variable outside of any code block, we can access it from anywhere in the file. Note that the code works for both let- and var-declared variables. It will not work for const-declared variables because constants don't allow reassignment.
+- 4 types of scope in JS: global scope, module scope, function scope, and block scope.
+- Variable in a function scope can be called a local variable, or local to the function.
+- Not recommended 
+
+
+#### NodeJs Modules
+ES6 syntax is newer and common in front-end JavaScript such as anything in the browser, or in frameworks such as ReactJS. However, it doesn't exactly work as-is in NodeJS.
+
+- However, if that code snippet were to be put into a NodeJS file, it must use a ".mjs" extension instead of a ".js" extension. This is so NodeJS knows to treat that code as a module, using newer module syntax. This means that if that code were to go into app.js, that file must be renamed as app.mjs for it to work when run with node app.mjs.
+- To import a full object, you would use a statement like import * as objectName from filePath;
+- To import a destructured import, you would use a statement like import { importedFunction } from filePath;
+
+    // const whateverObjectNameWeWant = require("./messageUtilities");
+    import * as whateverObjectNameWeWant from "./messageUtilities.js";
+
+    // const anotherImportedFile = require("./someOtherFile");
+    import { messageRepeater } from "./someOtherFile.js";
+
+
+    let message = "Hello NodeJS!";
+
+    console.log(whateverObjectNameWeWant.messageRepeater(message, 3));
+    console.log(messageRepeater());
+
+
+
+
+
+ 
